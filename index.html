@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -205,22 +205,22 @@
 <canvas id="bg" aria-hidden="true"></canvas>
 <div class="vignette"></div>
 
-<button id="splash" type="button" aria-label="Seite betreten" disabled>
+<button id="splash" type="button" aria-label="Enter page" disabled>
   <span class="ld">
     <span class="ld-ring">
       <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="54"/><circle class="prog" id="ldProg" cx="60" cy="60" r="54"/></svg>
       <span class="ld-avatar" id="ldAvatar"></span>
     </span>
     <span class="ld-name" id="ldName"></span>
-    <span class="ld-status"><span id="ldPct">0%</span><span id="splashText">klick zum Betreten...</span></span>
+    <span class="ld-status"><span id="ldPct">0%</span><span id="splashText">click to enter...</span></span>
   </span>
 </button>
 
-<button id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu" aria-label="Sprache">
+<button id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="langMenu" aria-label="Language">
   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.8 2.6 4.2 5.6 4.2 9s-1.4 6.4-4.2 9c-2.8-2.6-4.2-5.6-4.2-9S9.2 5.6 12 3z"/></svg>
 </button>
 <button id="muteBtn" type="button" aria-pressed="false" aria-label="Sound"></button>
-<div id="langMenu" role="listbox" aria-label="Sprache"></div>
+<div id="langMenu" role="listbox" aria-label="Language"></div>
 
 <main>
   <section class="card" id="card" aria-label="Profil">
@@ -232,7 +232,7 @@
 
     <div class="views">
       <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-      <span><span id="viewCount">0</span> <span id="viewLabel">Profilaufrufe</span></span>
+      <span><span id="viewCount">0</span> <span id="viewLabel">profile views</span></span>
     </div>
     <div class="copyright" id="copyright"></div>
   </section>
@@ -343,7 +343,7 @@ const I18N = {
         pTitle: "उपयोगकर्ता नहीं मिला", pSub: "अपना स्टेटस दिखाने के लिए Discord सर्वर से जुड़ें",
         views: "प्रोफ़ाइल व्यूज़", copy: "कॉपी करें", copied: "कॉपी किया गया:", copyFail: "कॉपी नहीं हो सका", lang: "भाषा", sound: "ध्वनि", rights: "सर्वाधिकार सुरक्षित" }
 };
-let lang = "de";
+let lang = "en";
 let viewsN = 1;
 
 function applyLang(code, persist) {
@@ -369,7 +369,6 @@ function applyLang(code, persist) {
     const on = b.dataset.code === code;
     b.classList.toggle("active", on); b.setAttribute("aria-selected", String(on));
   });
-  if (persist) { try { localStorage.setItem("lang", code); } catch (e) {} }
 }
 
 /* ---------- Inhalt ---------- */
@@ -602,13 +601,8 @@ langBtn.addEventListener("click", e => { e.stopPropagation(); menu.classList.con
 document.addEventListener("click", e => { if (!e.target.closest("#langMenu")) closeMenu(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
 
-/* Startsprache: gespeichert > Browsersprache > Englisch */
-(function () {
-  let saved = null;
-  try { saved = localStorage.getItem("lang"); } catch (e) {}
-  const browser = (navigator.languages && navigator.languages[0] || navigator.language || "en").slice(0, 2).toLowerCase();
-  applyLang(saved && I18N[saved] ? saved : (I18N[browser] ? browser : "en"), false);
-})();
+/* Startsprache: immer Englisch (Wechsel über das Globus-Icon) */
+applyLang("en", false);
 </script>
 </body>
 </html>
